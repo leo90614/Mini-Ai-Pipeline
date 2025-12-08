@@ -1,6 +1,7 @@
 # Mini-AI-Pipeline: Simple Sentiment Classification Project
 
 This project builds a small end-to-end AI pipeline that classifies short English sentences into **positive** or **negative** sentiment.  
+The goal is to clearly show how a simple AI workflow works from data to evaluation.
 
 ---
 
@@ -9,11 +10,12 @@ This project builds a small end-to-end AI pipeline that classifies short English
 ### What are we trying to do?
 We want a system that reads a short sentence and predicts whether the sentiment is **positive** or **negative**.
 
-### Why is this interesting or useful?
+### Why is this useful?
 People write countless reviews, comments, and reactions every day.  
-No one can manually read everything. A sentiment classifier can quickly show how people feel about something.
+No one can manually read everything, so a sentiment classifier helps quickly understand how people feel.
 
-Even though this task is simple, it nicely shows the full AI workflow:  
+Even though this task is simple, it nicely demonstrates the full AI workflow:
+
 **data → baseline → model → evaluation → reflection**
 
 ### Input → Output
@@ -21,24 +23,25 @@ Even though this task is simple, it nicely shows the full AI workflow:
 - **Output:** `"positive"` or `"negative"`
 
 ### Success Criteria
-- The AI model should outperform a basic rule-based baseline.  
+- The AI model should outperform the basic rule-based baseline.  
 - Accuracy and F1-score should clearly improve.  
-- Predictions should also make sense when we manually check examples.
+- Predictions should also make sense when checking example sentences manually.
 
 ---
 
 ## 2. Dataset
 
-I created a custom dataset of 300 sentences, with an almost perfectly balanced number of positive and negative examples.
-Example format:
+I created a custom dataset of **300 sentences**, with an almost perfectly balanced number of positive and negative examples.
 
-text,label
-The food was amazing,positive
-The app keeps crashing,negative
+**Example format:**
 
+| text                     | label    |
+|--------------------------|----------|
+| The food was amazing     | positive |
+| The app keeps crashing   | negative |
 
 The file is here:
-data/sentiment_data.csv
+**```data/sentiment_data.csv```**
 
 
 ---
@@ -55,8 +58,7 @@ My baseline works like this:
 
 This method is extremely limited, but it shows why we need a real model.
 
-File:
-src/baseline.py
+File: **```src/baseline.py```**
 
 
 
@@ -79,8 +81,7 @@ This class handles:
 - Device selection (CPU/GPU)  
 - Converting logits → labels  
 
-File:
-src/pipeline.py
+File: **```src/pipeline.py```**
 
 
 
