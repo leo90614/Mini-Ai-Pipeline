@@ -31,32 +31,75 @@ Even though this task is simple, it nicely demonstrates the full AI workflow:
 
 ## 2. Dataset
 
-I created a custom dataset of **300 sentences**, with an almost perfectly balanced number of positive and negative examples.
+The dataset contains **exactly 300 short English sentences**, roughly balanced between `positive` and `negative`.  
+The goal was to keep the sentences simple and diverse, so that both the baseline and the AI model can be evaluated clearly.
 
-**Example format:**
+### Format
+Each entry consists of a text sentence and a sentiment label:
+
 
 | text                     | label    |
 |--------------------------|----------|
 | The food was amazing     | positive |
 | The app keeps crashing   | negative |
 
+
 The file is here:
 **```data/sentiment_data.csv```**
+
+
+### Train/Test Split
+We split the dataset into **80% training** and **20% testing** using a randomized split.  
+Because the dataset is balanced, this split also results in a nearly balanced test set.
+
+### Preprocessing
+Minimal preprocessing was applied, since the Transformer tokenizer handles most steps automatically:
+
+- **Lowercasing:** handled by the pretrained model (uncased tokenizer).  
+- **Tokenization:** using the DistilBERT tokenizer (`AutoTokenizer`).  
+- **Truncation:** sentences longer than the model’s maximum length are automatically truncated.  
+- **Padding:** shorter sentences are padded during batching.  
+- **No manual text cleaning:** we intentionally kept sentences simple and natural to simulate a realistic small dataset.
+
+These steps ensure that the input is standardized before being fed into both the baseline and the AI pipeline.
 
 
 ---
 
 ## 3. Baseline System (Rule-based)
 
-Before using a real model, we need a simple baseline.
+Before building the actual AI model, I first designed a very simple **naïve baseline** that does not rely on any complex machine learning.  
+The goal of this baseline is to give us a reference point so we can measure how much the AI pipeline improves the task.
 
-My baseline works like this:
+### How the baseline works
+The baseline uses a small, hand-crafted set of keywords:
 
-- I made two tiny lists: positive words and negative words.
-- If a sentence contains more positive words → predict **positive**
-- Otherwise → predict **negative**
+- A short list of **positive** words (e.g., *good, nice, helpful, amazing*).
+- A short list of **negative** words (e.g., *bad, terrible, awful, boring*).
 
-This method is extremely limited, but it shows why we need a real model.
+For each sentence:
+1. Count how many positive keywords appear.  
+2. Count how many negative keywords appear.  
+3. If positive > negative → predict **positive**.  
+4. Otherwise → predict **negative**.
+
+This approach does **not** look at grammar, synonyms, sentence structure, or the overall meaning.  
+It simply checks whether a few specific words appear.
+
+### Why this is considered naïve
+- It cannot understand common positive words not in the tiny list (e.g., *knowledgeable*, *crispy*, *exciting*).
+- It ignores context (e.g., sarcasm, negation like *“not good”*).
+- It breaks easily when sentences use more natural expressions.
+- It treats all sentences as bags of words with no structure.
+
+### When the baseline fails
+This rule-based method usually fails on:
+- Descriptive adjectives (*warm*, *soft*, *crispy*).  
+- Subtle positivity (e.g., *“the staff smiled at us”*).  
+- Sentences with no explicit “keyword.”  
+- Slightly long or complex sentences.
+
+Because of these limitations, this baseline gives us a good contrast point when evaluating the transformer model.
 
 File: **```src/baseline.py```**
 
@@ -64,22 +107,64 @@ File: **```src/baseline.py```**
 
 ---
 
+
+---
+
 ## 4. AI Pipeline (Transformer Model)
 
-For the actual model, I used a lightweight pretrained Transformer:
-textattack/distilbert-base-uncased-SST-2
+For the main system, we built a small but realistic **AI pipeline** using a pretrained transformer model:
+
+```textattack/distilbert-base-uncased-SST-2```
+
+I did **not** fine-tune the model.  
+I only used it for inference, which is allowed by the assignment.
+
+### Pipeline Stages
+
+The pipeline has four clear stages, similar to what the assignment describes:
 
 
-I did **not** train a new model.  
-Instead, I wrapped this pretrained model in a small class:
-SentimentClassifier
+### **1. Preprocessing**
+I used the DistilBERT tokenizer to:
+- lowercase text (because it's *uncased*)  
+- tokenize the sentence into subword units  
+- apply truncation if the text is too long  
+- pad sequences during batching  
+
+No manual cleaning was required because the tokenizer handles formatting reliably.
 
 
-This class handles:
-- Tokenization  
-- Batch inference  
-- Device selection (CPU/GPU)  
-- Converting logits → labels  
+### **2. Representation (Embeddings)**
+The tokenized input is passed into the DistilBERT encoder, which outputs:
+- contextual embeddings for each token  
+- a pooled representation for the entire sentence  
+
+These embeddings capture the meaning of the sentence far better than simple keyword matching.
+
+
+### **3. Decision Stage**
+The pretrained classification head converts embeddings into:
+- logits for **positive** and **negative**  
+- I took the `argmax` to produce the final label
+
+This replaces the “keyword counting” logic used in the baseline.
+
+
+### **4. Optional Post-processing**
+After prediction:
+- I converted the model’s numeric outputs (0/1) into readable labels (“positive”, “negative”).  
+- I batched predictions for faster evaluation.
+
+No additional thresholds or reranking were necessary.
+
+
+
+### Why the pipeline works better
+- It understands synonyms and subtle phrasing (e.g., *crispy*, *knowledgeable*, *smiled*).  
+- It uses context, not just individual words.  
+- It handles various writing styles and sentence structures.  
+- Pretrained knowledge from large datasets makes the predictions robust even with a small dataset.
+
 
 File: **```src/pipeline.py```**
 
@@ -206,6 +291,8 @@ What I learned from this project:
 - Pretrained models make it easy to build working pipelines quickly.
 - Simple rule-based systems break easily when language becomes slightly more complex.
 - Checking mistakes manually helps understand model strengths and weaknesses.
+
+I also found that accuracy and F1-score captured the performance of this task quite well, especially because the dataset was balanced. Recall was particularly informative in showing the baseline’s weaknesses.
 
 Overall, this project helped me clearly see how all pieces of an AI system fit together.
 
