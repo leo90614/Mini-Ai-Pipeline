@@ -29,7 +29,7 @@ Even though this task is simple, it nicely shows the full AI workflow:
 
 ## 2. Dataset
 
-I created a small dataset of **300 sentences** (150 positive, 150 negative).  
+I created a custom dataset of 300 sentences, with an almost perfectly balanced number of positive and negative examples.
 Example format:
 
 text,label
@@ -104,12 +104,17 @@ Because sentiment classification is a binary task, and these metrics clearly sho
 ### Baseline (Rule-based)
 - Very low recall  
 - Predicts **negative** most of the time unless it sees obvious positive keywords  
-- Misses many positive examples  
+- Misses many positive examples
+
+In our final dataset, the baseline reached around **0.60 accuracy, 1.00 precision, 0.20 recall**, and **0.33 F1-score**.
 
 ### AI Model (Transformer)
 - Much higher accuracy and F1-score  
 - Understands a wide variety of expressions  
-- Handles subtle positive wording that baseline cannot  
+- Handles subtle positive wording that baseline cannot
+
+The transformer model achieved about **0.98 accuracy, 0.97 precision, 1.00 recall**, and **0.98 F1-score**.
+This is a huge improvement over the baseline!
 
 A comparison plot is shown inside the notebook.
 
@@ -117,27 +122,38 @@ A comparison plot is shown inside the notebook.
 
 ## 7. Case Study (Understanding Errors)
 
-Here are a few examples where the baseline failed but the model succeeded:
+Here are some examples from the test set where the baseline failed but the model succeeded.  
+These examples help show why the rule-based system struggles while the transformer model performs much better.
 
 ### Example 1
-- Text: *"The movie ending was beautiful"*  
-- Baseline: **negative**  
-- Model: **positive**  
-- Reason: baseline doesn't know the word "beautiful"
+- **Text:** "The tour guide was knowledgeable"  
+- **Baseline:** negative  
+- **Model:** positive  
+- **Reason:** the baseline does not recognize the word “knowledgeable” as positive.
 
 ### Example 2
-- Text: *"The chair is comfortable for long hours"*  
-- Baseline: **negative**  
-- Model: **positive**  
-- Reason: baseline only matches very specific words like "good" or "great"
+- **Text:** "The movie trailer looked exciting"  
+- **Baseline:** negative  
+- **Model:** positive  
+- **Reason:** the baseline only detects simple positive words like “good” or “great,” and misses many natural expressions.
 
 ### Example 3
-- Text: *"The teacher explained things clearly"*  
-- Baseline: **negative**  
-- Model: **positive**  
-- Reason: baseline ignores context and synonyms
+- **Text:** "The pizza crust was crispy"  
+- **Baseline:** negative  
+- **Model:** positive  
+- **Reason:** the baseline cannot understand positive descriptions outside its tiny keyword list.
 
-This shows why AI models are necessary for real language tasks.
+### Example 4
+- **Text:** "The bread was soft and warm"  
+- **Baseline:** negative  
+- **Model:** positive  
+
+### Example 5
+- **Text:** "The hotel staff smiled at us"  
+- **Baseline:** negative  
+- **Model:** positive  
+
+These examples clearly show that the rule-based baseline is extremely limited, while the transformer model can understand much more natural phrasing and context.
 
 ---
 
