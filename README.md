@@ -11,12 +11,10 @@ The goal is to clearly show how a simple AI workflow works from data to evaluati
 We want a system that reads a short sentence and predicts whether the sentiment is **positive** or **negative**.
 
 ### Why is this useful?
-People write countless reviews, comments, and reactions every day.  
-No one can manually read everything, so a sentiment classifier helps quickly understand how people feel.
+People write countless reviews, comments, and reactions every day on platforms like online stores, apps, social media, and course evaluations.  
+Manually checking all of this feedback is impossible, so having an automatic sentiment classifier helps quickly summarize how users feel.  
+Even a simple model like this can give useful signals about customer satisfaction, product quality, or general trends in opinions.
 
-Even though this task is simple, it nicely demonstrates the full AI workflow:
-
-**data → baseline → model → evaluation → reflection**
 
 ### Input → Output
 - **Input:** one short English sentence  
