@@ -1,7 +1,6 @@
 # Mini-AI-Pipeline: Simple Sentiment Classification Project
 
 This project builds a small end-to-end AI pipeline that classifies short English sentences into **positive** or **negative** sentiment.  
-Everything here is written in an easy style, as if I am explaining it to one of my classmates.
 
 ---
 
