@@ -307,22 +307,4 @@ Although the overall pipeline works well for this assignment, there were several
 
 Overall, this project helped me clearly see how all pieces of an AI system fit together.
 
----
-
-## 9. How to Run (Colab)
-
-Clone the repo:
-!git clone https://github.com/leo90614/Mini-Ai-Pipeline.git
-
-
-Add `src` to the Python path:
-
-```python
-import sys
-sys.path.append("/content/Mini-Ai-Pipeline/src")
-
-
-Open and run the notebook:
-!git clone https://github.com/leo90614/Mini-Ai-Pipeline.git
-
 
