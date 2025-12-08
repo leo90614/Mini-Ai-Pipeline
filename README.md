@@ -225,7 +225,7 @@ These examples show the limitations of rule-based methods and why a learned mode
 
 ---
 
-### **Example 1**
+### > Example 1
 **Text:** "The tour guide was knowledgeable"  
 - **Baseline:** negative  
 - **Model:** positive  
@@ -234,9 +234,9 @@ These examples show the limitations of rule-based methods and why a learned mode
   It does not understand that “knowledgeable” carries positive meaning.  
   The transformer model correctly learns this from context.
 
----
 
-### **Example 2**
+
+### > Example 2
 **Text:** "The movie trailer looked exciting"  
 - **Baseline:** negative  
 - **Model:** positive  
@@ -245,9 +245,9 @@ These examples show the limitations of rule-based methods and why a learned mode
   so the baseline mislabels it as negative.  
   The model generalizes to unseen positive expressions.
 
----
 
-### **Example 3**
+
+### > Example 3
 **Text:** "The pizza crust was crispy"  
 - **Baseline:** negative  
 - **Model:** positive  
@@ -255,9 +255,9 @@ These examples show the limitations of rule-based methods and why a learned mode
   The baseline cannot interpret descriptive adjectives like “crispy.”  
   The model captures these finer-grained semantics.
 
----
 
-### **Example 4**
+
+### > Example 4
 **Text:** "The bread was soft and warm"  
 - **Baseline:** negative  
 - **Model:** positive  
@@ -265,9 +265,9 @@ These examples show the limitations of rule-based methods and why a learned mode
   “Soft” and “warm” are implicitly positive, but not in the baseline dictionary.  
   The transformer recognizes the positive tone of the sentence.
 
----
 
-### **Example 5**
+
+### > Example 5
 **Text:** "The hotel staff smiled at us"  
 - **Baseline:** negative  
 - **Model:** positive  
@@ -300,14 +300,12 @@ Although the overall pipeline works well for this assignment, there were several
 
 1) The dataset contains only 300 short sentences, so the model’s strong performance may not fully generalize to noisy or real-world text. With such a small dataset, the train/test split can also influence the metrics noticeably.
 
-2) The baseline is intentionally very simple, which makes the performance gap with the transformer model look larger than it would be with a stronger baseline such as TF-IDF or logistic regression.
+2) The baseline is intentionally very simple, which makes the performance gap with the transformer model look larger than it would be with a stronger baseline.
 
 3) The pipeline relies entirely on a pretrained model without any fine-tuning, meaning it never learns from our dataset directly. Real applications usually require some tuning to handle slang, sarcasm, or longer documents.
 
 4) The project focuses only on binary sentiment (positive vs. negative). Real sentiment tasks often include neutral or mixed cases, which would require a more complex labeling and modeling setup.
 
-
-Despite these limitations, the project still demonstrates the core idea of building a small AI pipeline and highlights the clear differences between a naïve baseline and a modern transformer model.
 
 Overall, this project helped me clearly see how all pieces of an AI system fit together.
 
