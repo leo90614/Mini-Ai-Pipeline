@@ -102,6 +102,16 @@ Because sentiment classification is a binary task, and these metrics clearly sho
 
 ## 6. Results
 
+### Performance Summary (Baseline vs Model)
+
+| Model               | Accuracy | Precision | Recall | F1-score |
+|--------------------|----------|-----------|--------|----------|
+| Rule-based Baseline | 0.60     | 1.00      | 0.20   | 0.33     |
+| Transformer Model   | 0.98     | 0.97      | 1.00   | 0.98     |
+
+The transformer model clearly outperforms the baseline across all metrics, especially recall and F1-score.
+
+
 ### Baseline (Rule-based)
 - Very low recall  
 - Predicts **negative** most of the time unless it sees obvious positive keywords  
@@ -115,46 +125,75 @@ In our final dataset, the baseline reached around **0.60 accuracy, 1.00 precisio
 - Handles subtle positive wording that baseline cannot
 
 The transformer model achieved about **0.98 accuracy, 0.97 precision, 1.00 recall**, and **0.98 F1-score**.
+
 This is a huge improvement over the baseline!
 
-A comparison plot is shown inside the notebook.
+
+A comparison bar graph is shown inside the notebook.
 
 ---
 
 ## 7. Case Study (Understanding Errors)
 
-Here are some examples from the test set where the baseline failed but the model succeeded.  
-These examples help show why the rule-based system struggles while the transformer model performs much better.
+Below are several examples from the test set where the baseline classifier failed but the transformer model succeeded.  
+These examples show the limitations of rule-based methods and why a learned model is necessary.
 
-### Example 1
-- **Text:** "The tour guide was knowledgeable"  
+---
+
+### **Example 1**
+**Text:** "The tour guide was knowledgeable"  
 - **Baseline:** negative  
 - **Model:** positive  
-- **Reason:** the baseline does not recognize the word “knowledgeable” as positive.
+- **Why?**  
+  The baseline only checks a tiny list of “positive words.”  
+  It does not understand that “knowledgeable” carries positive meaning.  
+  The transformer model correctly learns this from context.
 
-### Example 2
-- **Text:** "The movie trailer looked exciting"  
+---
+
+### **Example 2**
+**Text:** "The movie trailer looked exciting"  
 - **Baseline:** negative  
 - **Model:** positive  
-- **Reason:** the baseline only detects simple positive words like “good” or “great,” and misses many natural expressions.
+- **Why?**  
+  Words like “exciting” are not in the baseline’s keyword list,  
+  so the baseline mislabels it as negative.  
+  The model generalizes to unseen positive expressions.
 
-### Example 3
-- **Text:** "The pizza crust was crispy"  
+---
+
+### **Example 3**
+**Text:** "The pizza crust was crispy"  
 - **Baseline:** negative  
 - **Model:** positive  
-- **Reason:** the baseline cannot understand positive descriptions outside its tiny keyword list.
+- **Why?**  
+  The baseline cannot interpret descriptive adjectives like “crispy.”  
+  The model captures these finer-grained semantics.
 
-### Example 4
-- **Text:** "The bread was soft and warm"  
+---
+
+### **Example 4**
+**Text:** "The bread was soft and warm"  
 - **Baseline:** negative  
 - **Model:** positive  
+- **Why?**  
+  “Soft” and “warm” are implicitly positive, but not in the baseline dictionary.  
+  The transformer recognizes the positive tone of the sentence.
 
-### Example 5
-- **Text:** "The hotel staff smiled at us"  
+---
+
+### **Example 5**
+**Text:** "The hotel staff smiled at us"  
 - **Baseline:** negative  
 - **Model:** positive  
+- **Why?**  
+  The rule-based system cannot detect subtle positive cues like “smiled.”  
+  The model understands actions and sentiment beyond simple keywords.
 
-These examples clearly show that the rule-based baseline is extremely limited, while the transformer model can understand much more natural phrasing and context.
+---
+
+Together, these examples show how the baseline fails whenever sentences use natural phrasing or subtle positive descriptions, while the transformer model successfully handles these variations in everyday language.
+
 
 ---
 
