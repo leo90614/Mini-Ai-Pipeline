@@ -8,11 +8,11 @@ from typing import List
 
 # 긍정/부정 단어 목록
 POS_WORDS = {
-    "good", "great", "excellent", "amazing", "awesome", "love", "like", "happy", "fantastic", "nice"
+    "good", "great", "excellent", "amazing", "awesome", "love", "like", "happy", "fantastic", "nice", "beautiful", "clear", "comfortable", "recommend", "wonderful"
 }
 
 NEG_WORDS = {
-    "bad", "terrible", "awful", "hate", "boring", "disappointed", "poor", "worst", "sad", "angry"
+    "bad", "terrible", "awful", "hate", "boring", "disappointed", "poor", "worst", "sad", "angry", "miserable", "uncomfortable", "cloudy", "difficult", "unhappy"
 }
 
 
