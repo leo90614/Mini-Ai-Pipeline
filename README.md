@@ -294,6 +294,21 @@ What I learned from this project:
 
 I also found that accuracy and F1-score captured the performance of this task quite well, especially because the dataset was balanced. Recall was particularly informative in showing the baseline’s weaknesses.
 
+### > Limitations
+
+Although the overall pipeline works well for this assignment, there were several limitations to keep in mind.  
+
+1) The dataset contains only 300 short sentences, so the model’s strong performance may not fully generalize to noisy or real-world text. With such a small dataset, the train/test split can also influence the metrics noticeably.
+
+2) The baseline is intentionally very simple, which makes the performance gap with the transformer model look larger than it would be with a stronger baseline such as TF-IDF or logistic regression.
+
+3) The pipeline relies entirely on a pretrained model without any fine-tuning, meaning it never learns from our dataset directly. Real applications usually require some tuning to handle slang, sarcasm, or longer documents.
+
+4) The project focuses only on binary sentiment (positive vs. negative). Real sentiment tasks often include neutral or mixed cases, which would require a more complex labeling and modeling setup.
+
+
+Despite these limitations, the project still demonstrates the core idea of building a small AI pipeline and highlights the clear differences between a naïve baseline and a modern transformer model.
+
 Overall, this project helped me clearly see how all pieces of an AI system fit together.
 
 ---
