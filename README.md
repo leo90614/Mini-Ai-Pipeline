@@ -12,7 +12,7 @@ We want a system that reads a short sentence and predicts whether the sentiment 
 
 ### Why is this useful?
 People write countless reviews, comments, and reactions every day on platforms like online stores, apps, social media, and course evaluations.  
-Manually checking all of this feedback is impossible, so having an automatic sentiment classifier helps quickly summarize how users feel.  
+Manually checking all of this feedback is impossible, so having an automatic sentiment classifier helps quickly summarize how users feel in general.  
 Even a simple model like this can give useful signals about customer satisfaction, product quality, or general trends in opinions.
 
 
@@ -47,8 +47,8 @@ The file is here:
 
 
 ### Train/Test Split
-We split the dataset into **80% training** and **20% testing** using a randomized split.  
-Because the dataset is balanced, this split also results in a nearly balanced test set.
+I split the dataset into **80% training** and **20% testing** using a randomized split.  
+Because the dataset is balanced, this split should also result in a nearly balanced test set.
 
 ### Preprocessing
 Minimal preprocessing was applied, since the Transformer tokenizer handles most steps automatically:
@@ -57,7 +57,7 @@ Minimal preprocessing was applied, since the Transformer tokenizer handles most 
 - **Tokenization:** using the DistilBERT tokenizer (`AutoTokenizer`).  
 - **Truncation:** sentences longer than the model’s maximum length are automatically truncated.  
 - **Padding:** shorter sentences are padded during batching.  
-- **No manual text cleaning:** we intentionally kept sentences simple and natural to simulate a realistic small dataset.
+- **No manual text cleaning:** I intentionally kept sentences simple and natural to simulate a realistic small dataset.
 
 These steps ensure that the input is standardized before being fed into both the baseline and the AI pipeline.
 
@@ -110,11 +110,11 @@ File: **```src/baseline.py```**
 
 ## 4. AI Pipeline (Transformer Model)
 
-For the main system, we built a small but realistic **AI pipeline** using a pretrained transformer model:
+For the main system, I built a small but realistic **AI pipeline** using a pretrained transformer model:
 
 ```textattack/distilbert-base-uncased-SST-2```
 
-I did **not** fine-tune the model.  
+I did not fine-tune the model.  
 I only used it for inference, which is allowed by the assignment.
 
 ### Pipeline Stages
@@ -239,8 +239,7 @@ These examples show the limitations of rule-based methods and why a learned mode
 - **Baseline:** negative  
 - **Model:** positive  
 - **Why?**  
-  Words like “exciting” are not in the baseline’s keyword list,  
-  so the baseline mislabels it as negative.  
+  Words like “exciting” are not in the baseline’s keyword list, so the baseline mislabels it as negative.  
   The model generalizes to unseen positive expressions.
 
 
