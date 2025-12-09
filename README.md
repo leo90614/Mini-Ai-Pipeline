@@ -102,10 +102,6 @@ Because of these limitations, this baseline gives us a good contrast point when 
 File: **```src/baseline.py```**
 
 
-
----
-
-
 ---
 
 ## 4. AI Pipeline (Transformer Model)
@@ -221,7 +217,6 @@ A comparison bar graph is shown inside the notebook.
 Below are several examples from the test set where the baseline classifier failed but the transformer model succeeded.  
 These examples show the limitations of rule-based methods and why a learned model is necessary.
 
----
 
 ### > Example 1
 **Text:** "The tour guide was knowledgeable"  
@@ -272,7 +267,6 @@ These examples show the limitations of rule-based methods and why a learned mode
   The rule-based system cannot detect subtle positive cues like “smiled.”  
   The model understands actions and sentiment beyond simple keywords.
 
----
 
 Together, these examples show how the baseline fails whenever sentences use natural phrasing or subtle positive descriptions, while the transformer model successfully handles these variations in everyday language.
 
